@@ -1,96 +1,183 @@
-# API de Gestión de Productos - Kodigo Bootcamp
+# 🛒 API de Gestión de Productos
 
-## Autor
-Edwin Efraín Juárez Mezquita
+> Proyecto final del Bootcamp Full Stack Jr. - Kodigo
 
-## Descripción
-API RESTful desarrollada en Laravel como proyecto final del bootcamp Full Stack Jr. Esta API permite la gestión de productos con autenticación de usuarios, valoraciones y comentarios.
+**Desarrollado por:** Edwin Efraín Juárez Mezquita
 
-## Tecnologías Utilizadas
-- PHP 8.1+
-- Laravel 8+
-- MySQL
-- Laravel Sanctum (para autenticación por tokens)
+---
 
-## Instalación
+## 📝 Descripción
 
-1. Clona el repositorio:
-   ```bash
-   git clone <url-del-repositorio>
-   cd api-productos-kodigo
-   ```
+Esta es una API RESTful para gestionar productos, donde los usuarios pueden registrarse, crear productos, y dejar valoraciones. Fue desarrollada con Laravel y utiliza autenticación mediante tokens.
 
-2. Instala las dependencias:
-   ```bash
-   composer install
-   ```
+## 🚀 Características
 
-3. Copia el archivo de configuración del entorno:
-   ```bash
-   cp .env.example .env
-   ```
+- ✅ Registro y autenticación de usuarios
+- ✅ CRUD completo de productos
+- ✅ Sistema de valoraciones y comentarios
+- ✅ Cálculo automático de promedios
+- ✅ Consulta del producto mejor valorado
+- ✅ Autorización (solo el creador puede editar/eliminar sus productos)
 
-4. Genera la clave de la aplicación:
-   ```bash
-   php artisan key:generate
-   ```
+## 🛠️ Tecnologías
 
-5. Configura la base de datos en el archivo `.env`:
-   ```
-   DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE=kodigo_products_api
-   DB_USERNAME=tu_usuario
-   DB_PASSWORD=tu_password
-   ```
+- **PHP** 7.4+
+- **Laravel** 8
+- **MySQL**
+- **Laravel Sanctum** (autenticación)
 
-6. Ejecuta las migraciones:
-   ```bash
-   php artisan migrate
-   ```
+---
 
-7. Inicia el servidor:
-   ```bash
-   php artisan serve
-   ```
+## ⚙️ Instalación
 
-## Endpoints de la API
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/pandamigo182/api-kodigo.git
+cd api-kodigo
+```
 
-### Autenticación (Públicos)
-- `POST /api/register` - Registrar un nuevo usuario (name, email, password)
-- `POST /api/login` - Iniciar sesión (email, password)
+### 2. Instalar dependencias
+```bash
+composer install
+```
 
-### Productos (Requieren Bearer Token)
-- `GET /api/products` - Listar productos (paginado)
-- `POST /api/products` - Crear un producto (name, description, price)
-- `GET /api/products/{id}` - Ver un producto específico
-- `PUT /api/products/{id}` - Actualizar un producto (solo el creador)
-- `DELETE /api/products/{id}` - Eliminar un producto (solo el creador)
+### 3. Configurar variables de entorno
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-### Valoraciones (Requieren Bearer Token)
-- `POST /api/products/{product}/ratings` - Crear o actualizar valoración (rating 1-5, comment opcional)
+Edita el archivo `.env` con tus credenciales de base de datos:
+```
+DB_DATABASE=kodigo_products_api
+DB_USERNAME=root
+DB_PASSWORD=root
+DB_HOST=127.0.0.1
+DB_PORT=3306
+```
 
-### Estadísticas (Requieren Bearer Token)
-- `GET /api/stats/best-rated-product` - Obtener el producto mejor valorado
-- `POST /api/logout` - Cerrar sesión
+### 4. Crear base de datos y ejecutar migraciones
+```bash
+php artisan migrate
+```
 
-## Pruebas
-Utiliza herramientas como Postman o Insomnia para probar los endpoints. Incluye el token Bearer en el header `Authorization` para rutas protegidas.
+### 5. Iniciar servidor
+```bash
+php artisan serve
+```
 
-## Documentación del Código
-Todo el código está documentado con PHPDoc para cumplir con los requisitos de documentación.
+La API estará disponible en: `http://127.0.0.1:8000`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 📚 Endpoints
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Autenticación
 
-## Security Vulnerabilities
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| POST | `/api/register` | Registrar usuario |
+| POST | `/api/login` | Iniciar sesión |
+| POST | `/api/logout` | Cerrar sesión (requiere auth) |
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Productos
 
-## License
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| GET | `/api/products` | Listar productos |
+| POST | `/api/products` | Crear producto |
+| GET | `/api/products/{id}` | Ver detalle |
+| PUT | `/api/products/{id}` | Actualizar (solo creador) |
+| DELETE | `/api/products/{id}` | Eliminar (solo creador) |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Valoraciones
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| POST | `/api/products/{id}/ratings` | Agregar valoración |
+
+### Estadísticas
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| GET | `/api/stats/best-rated-product` | Producto mejor valorado |
+
+---
+
+## 🧪 Pruebas con Postman
+
+Puedes importar la colección de Postman incluida en el proyecto: `Kodigo-API-Postman-Collection.json`
+
+### Ejemplo de uso:
+
+**1. Registrar usuario**
+```json
+POST /api/register
+{
+  "name": "Juan Perez",
+  "email": "juan@example.com",
+  "password": "password123",
+  "password_confirmation": "password123"
+}
+```
+
+**2. Crear producto** (con token)
+```json
+POST /api/products
+Headers: Authorization: Bearer {tu_token}
+{
+  "name": "Laptop HP",
+  "description": "Laptop de alta gama",
+  "price": 999.99
+}
+```
+
+**3. Agregar valoración**
+```json
+POST /api/products/1/ratings
+Headers: Authorization: Bearer {tu_token}
+{
+  "rating": 5,
+  "comment": "Excelente producto!"
+}
+```
+
+---
+
+## 📂 Estructura del Proyecto
+
+```
+app/
+├── Http/Controllers/Api/
+│   ├── AuthController.php
+│   ├── ProductController.php
+│   └── RatingController.php
+├── Models/
+│   ├── User.php
+│   ├── Product.php
+│   └── Rating.php
+├── Observers/
+│   └── RatingObserver.php
+└── Policies/
+    └── ProductPolicy.php
+```
+
+---
+
+## 💡 Notas
+
+- Los tokens de autenticación expiran después de 60 minutos
+- Un usuario solo puede valorar un producto una vez
+- Solo el creador de un producto puede editarlo o eliminarlo
+
+---
+
+## 📧 Contacto
+
+**Edwin Juárez** - [GitHub](https://github.com/pandamigo182)
+
+---
+
+## 📄 Licencia
+
+Este proyecto fue creado con fines educativos para el Bootcamp de Kodigo.
