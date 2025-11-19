@@ -2,7 +2,7 @@
 
 > Proyecto final del Bootcamp Full Stack Jr. - Kodigo
 
-**Desarrollado por:** Edwin Efraín Juárez Mezquita
+**Desarrollado por:** Edwin Efraín Juárez Mezquita - Jesua Donovan Martinez Martinez
 
 ---
 
